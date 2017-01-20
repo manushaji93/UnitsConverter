@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.manushaji.unitsconverter.MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        android:src="@drawable/pwtbg" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:alpha="0.7"
+        android:onClick="infoPressed"
+        android:src="@drawable/info_icon" />
+
+    <TextView
+        android:id="@+id/top_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/selector_spinner"
+        android:gravity="center_horizontal"
+        android:text="Convert"
+        android:textAllCaps="true"
+        android:textColor="#0277BD"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+
+    <Spinner
+        android:id="@id/selector_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/from_spinner"
+        android:entries="@array/Unit_Type"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@id/from_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/from_edit_text"
+        android:spinnerMode="dropdown" />
+
+
+    <EditText
+        android:id="@id/from_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/middle_rel_layout"
+        android:inputType="numberDecimal"
+        android:paddingTop="8dp"
+        android:text=""
+        android:textSize="30sp" />
+
+
+    <RelativeLayout
+        android:id="@id/middle_rel_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="24dp"
+        android:layout_marginTop="24dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/middle_to_text"
+            android:alpha="0.5"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@id/middle_to_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp"
+            android:text="To"
+            android:textAllCaps="true"
+            android:textSize="30sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_toRightOf="@id/middle_to_text"
+            android:alpha="0.5"
+            android:background="@android:color/black" />
+    </RelativeLayout>
+
+
+    <Spinner
+        android:id="@+id/to_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/middle_rel_layout"
+        android:spinnerMode="dropdown" />
+
+
+    <TextView
+        android:id="@+id/to_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/to_spinner"
+        android:paddingTop="8dp"
+        android:text="0"
+        android:textColor="@android:color/black"
+        android:textSize="30sp" />
+
+
+</RelativeLayout>

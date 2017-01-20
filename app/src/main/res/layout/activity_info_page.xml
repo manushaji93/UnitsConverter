@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_info_page"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.manushaji.unitsconverter.InfoPage">
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/cross"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:alpha="0.6"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:onClick="crossPressed"/>
+
+    <ImageView
+        android:id="@+id/logo_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/pwtbg"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="80dp"/>
+    <TextView
+        android:id="@+id/comp_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PURE WATER TECHNOLOGIES W.L.L.\nDoha,Qatar"
+        android:textAlignment="center"
+        android:layout_below="@id/logo_imageview"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        />
+    <TextView
+        android:id="@+id/phone_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comp_name_text"
+        android:text="+974 5501 0174\n+974 5551 8794\n+974 5042 0428"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="80dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="info@purewaterqatar.com"
+        android:layout_below="@id/phone_text"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/colorPrimary"/>
+
+</RelativeLayout>

@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Units Converter</string>
+
+    <string-array name="Unit_Type">
+        <item>Acceleration</item>
+        <item>Angles</item>
+        <item>Area</item>
+        <item>Circular Measure</item>
+        <item>Data Transfer Rate</item>
+        <item>Density</item>
+        <item>Digital Storage</item>
+        <item>Energy</item>
+        <item>Flow Rate (Volume)</item>
+        <item>Flow Rate (Mass)</item>
+        <item>Force</item>
+        <item>Frequency</item>
+        <item>Fuel Consumption</item>
+        <item>Length</item>
+        <item>Lighting</item>
+        <item>Liquid Measure</item>
+        <item>Mass</item>
+        <item>Power</item>
+        <item>Pressure</item>
+        <item>Torque</item>
+        <item>Temperature</item>
+        <item>Time</item>
+        <item>Velocity</item>
+        <item>Viscosity Dynamic</item>
+        <item>Viscosity Kinematic</item>
+        <item>Volume / Capacity</item>
+    </string-array>
+</resources>
