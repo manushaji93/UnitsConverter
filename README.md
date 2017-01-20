@@ -6,8 +6,10 @@ Contains multiple categories such as Area, Velocity, Volume, etc.
 
 Basic means of relative conversion such as:
 
-1 km = 1000m\n
-1m = 100cm\n
+1 km = 1000m
+
+1m = 100cm
+
 1cm = 10mm
 
 Therefore,
