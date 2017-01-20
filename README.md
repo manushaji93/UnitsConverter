@@ -11,7 +11,7 @@ Basic means of relative conversion such as:
 1cm = 10mm
 
 Therefore,
-1 km = (1000*100*10)mm and vice versa.
+1 km = (1000 * 100 * 10)mm and vice versa.
 
 Usage of Bigdecimal for preserving decimal precision. 
 Realtime update in answers based on input edits.
