@@ -2,7 +2,6 @@ package com.example.manushaji.unitsconverter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.icu.math.BigDecimal;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,12 +11,9 @@ import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
-import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static android.R.id.input;
 
 
 public class MainActivity extends Activity implements OnItemSelectedListener {
@@ -413,7 +409,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(accelerationValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -436,7 +432,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(anglesValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -459,7 +455,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(areaValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -482,7 +478,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(circularMeasureValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -505,7 +501,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(dataTransValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -528,7 +524,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(densityValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -551,7 +547,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(digitalStorValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -574,7 +570,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(energyValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -597,7 +593,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateVolValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -620,7 +616,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateMassValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -643,7 +639,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(forceValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -666,7 +662,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(frequencyValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -689,7 +685,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(fuelValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -712,7 +708,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lengthValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -735,7 +731,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lightingValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -758,7 +754,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(liquidMeasureValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -782,7 +778,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(massValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -806,7 +802,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(powerValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -830,7 +826,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(pressureValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -854,7 +850,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(torqueValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -881,18 +877,19 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                     switch (spFrom) {
                         case "°Celsius":
                             if (spTo.equals("°Fahrenheit"))
-                                answer = ((answer.multiply(nine)).divide(five,5)).add(thirtyTwo);
+                                answer = ((answer.multiply(nine)).divide(five, 5)).add(thirtyTwo);
                             else if (spTo.equals("°Kelvin"))
                                 answer = answer.add(twoSeventyThree);
                             else if (spTo.equals("°Rankine"))
-                                answer = ((answer.add(twoSeventyThree)).multiply(nine)).divide(five,5);
+                                answer = ((answer.add(twoSeventyThree)).multiply(nine)).divide(five, 5);
                             break;
+
 
                         case "°Fahrenheit":
                             if (spTo.equals("°Celsius"))
-                                answer = ((answer.subtract(thirtyTwo)).multiply(five)).divide(nine,5);
+                                answer = ((answer.subtract(thirtyTwo)).multiply(five)).divide(nine, 5);
                             else if (spTo.equals("°Kelvin"))
-                                answer = ((answer.subtract(thirtyTwo)).multiply(five).divide(nine,5)).add(twoSeventyThree);
+                                answer = ((answer.subtract(thirtyTwo)).multiply(five).divide(nine, 5)).add(twoSeventyThree);
                             else if (spTo.equals("°Rankine"))
                                 answer = answer.add(fourFiftyNine);
                             break;
@@ -908,11 +905,11 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
                         case "°Rankine":
                             if (spTo.equals("°Celsius"))
-                                answer = (answer.subtract(thirtyTwo).subtract(fourFiftyNine)).divide(onePointEight,5);
+                                answer = (answer.subtract(thirtyTwo).subtract(fourFiftyNine)).divide(onePointEight, 5);
                             else if (spTo.equals("°Fahrenheit"))
                                 answer = answer.subtract(fourFiftyNine);
                             else if (spTo.equals("°Kelvin"))
-                                answer = answer.divide(onePointEight,5);
+                                answer = answer.divide(onePointEight, 5);
                             break;
 
                         default:
@@ -933,7 +930,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(timeValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -957,7 +954,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(velocityValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -981,7 +978,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityDynValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -1005,7 +1002,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityKinValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;
@@ -1029,7 +1026,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         indexFrom += 1;
                         for (int x = indexFrom; x <= indexTo; x++) {
                             java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(volumeValArr[x]));
-                            answer = answer.divide(divNum,5);
+                            answer = answer.divide(divNum, 5);
                         }
                     } else if (indexFrom > indexTo) {
                         indexTo += 1;

@@ -8,13 +8,6 @@
     android:orientation="vertical"
     tools:context="com.example.manushaji.unitsconverter.MainActivity">
 
-    <!--<ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alpha="0.2"
-        android:src="@drawable/pwtbg" />-->
-
-
     <TextView
         android:id="@+id/top_text_view"
         android:layout_width="match_parent"
@@ -29,7 +22,6 @@
         android:textSize="15sp"
         android:textStyle="bold" />
 
-
     <Spinner
         android:id="@+id/selector_spinner"
         android:layout_width="match_parent"
@@ -43,7 +35,7 @@
         android:id="@+id/from_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
@@ -74,10 +66,9 @@
     <EditText
         android:id="@+id/from_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="80dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="1"
         android:background="@drawable/rounded_edit_text"
         android:gravity="left|top"
         android:hint="0"
@@ -86,11 +77,24 @@
         android:text=""
         android:textSize="30sp" />
 
+    <!--<ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:alpha="1"
+        android:onClick="infoPressed"
+        android:src="@drawable/pwtbg" />-->
+
     <ImageView
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
-        android:layout_margin="8dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
         android:alpha="1"
         android:onClick="infoPressed"
         android:src="@drawable/info_icon" />
@@ -99,7 +103,7 @@
         android:id="@+id/to_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:orientation="horizontal">
@@ -128,11 +132,10 @@
     <TextView
         android:id="@+id/to_text_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_weight="1"
         android:background="@drawable/rounded_edit_text"
         android:gravity="top|left"
         android:padding="8dp"
@@ -140,5 +143,11 @@
         android:textColor="@android:color/black"
         android:textSize="30sp" />
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/water_line" />
 </LinearLayout>
