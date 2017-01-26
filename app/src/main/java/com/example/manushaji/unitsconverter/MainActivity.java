@@ -2,26 +2,39 @@ package com.example.manushaji.unitsconverter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.TextView;
 
+import java.math.MathContext;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class MainActivity extends Activity implements OnItemSelectedListener {
 
+    LinearLayout ll;
+
     public java.math.BigDecimal answer = new java.math.BigDecimal("0");
-    public TextView result;
+
+    public boolean textViewDone = false;
+    public List<TextView> answerTextViewList = new ArrayList<TextView>();
+
+
     public EditText input;
-    Spinner spinnerSelector, spinnerFrom, spinnerTo;
+    Spinner spinnerSelector, spinnerFrom;
     String accelerationArr[];
     float accelerationValArr[] = new float[]{1f, 100f, 0.0254f, 12f, 32.17404856f};
 
@@ -73,7 +86,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
     String lengthArr[];
     float lengthValArr[] = new float[]{1f, 0.001f, 0.01f, 0.1f, 1609000f, 0.000568182f, 0.333333f, 0.0833333f, 72913.4f,
-            0.00005486f, 1980f, 0.009090909f, 100f, 1.2f, 0.00000000000045567220764f, 10000f, 0.0254f, 5889679948464570000f, 63241.077088071f};
+            0.00005486f, 1980f, 0.009090909f, 100f, 1.2f, 0.00000000000045567220764f, 10000f, 0.0254f};
 
     String lightingArr[];
     float lightingValArr[] = new float[]{1f, 0.0001f, 1550.0031000062f, 0.00694444444f, 1f};
@@ -116,7 +129,6 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             0.25f, 0.5f, 0.5f, 0.1f, 0.625f, 0.333333f, 4783.74f, 0.000578704f};
 
     int indexFrom = 0;
-    int indexTo = 0;
     String sp1;
 
     @Override
@@ -124,13 +136,12 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        result = (TextView) findViewById(R.id.to_text_view);
+        ll = (LinearLayout) findViewById(R.id.data_linear_layout);
+
         input = (EditText) findViewById(R.id.from_edit_text);
 
         spinnerSelector = (Spinner) findViewById(R.id.selector_spinner);
         spinnerFrom = (Spinner) findViewById(R.id.from_spinner);
-        spinnerTo = (Spinner) findViewById(R.id.to_spinner);
-
         spinnerSelector.setOnItemSelectedListener(this);
 
         Timer timer = new Timer();
@@ -146,235 +157,261 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
         sp1 = String.valueOf(spinnerSelector.getSelectedItem());
 
         if (sp1.equals("Acceleration")) {
-            accelerationArr = new String[]{"cm/sec²", "m/sec²", "inch/sec²", "ft/sec²", "g (acc. due to gravity)"};
-            ArrayAdapter<String> adapterAcceleration = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, accelerationArr);
+            accelerationArr = new String[]{"cm/sec²", "m/sec²", "inch/sec²", "ft/sec²", "Gravitational acc."};
+            ArrayAdapter<String> adapterAcceleration = new ArrayAdapter<String>(this, R.layout.spinner_layout, accelerationArr);
             adapterAcceleration.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterAcceleration.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterAcceleration);
-            spinnerTo.setAdapter(adapterAcceleration);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Angles")) {
             anglesArr = new String[]{"Degrees (angle)", "Radians", "Arcsecond", "Arcminute",
                     "Full Circle", "Semicircle", "1/4 Circle", "1/6 Circle", "1/8 Circle", "1/10 Circle", "1/12 Circle", "1/16 Circle"};
-            ArrayAdapter<String> adapterAngles = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anglesArr);
+            ArrayAdapter<String> adapterAngles = new ArrayAdapter<String>(this, R.layout.spinner_layout, anglesArr);
             adapterAngles.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterAngles.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterAngles);
-            spinnerTo.setAdapter(adapterAngles);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Area")) {
             areaArr = new String[]{"mm²", "cm²", "m²", "in²", "ft²", "yd²", "Hectare", "Acre",
                     "km²", "mi²", "Millimeter Diamater Circle", "Centimeter Diameter Circle", "Meter Diameter Circle",
                     "Inch Diameter Circle", "Foot Diameter Circle", "Yard Diameter Circle"};
-            ArrayAdapter<String> adapterArea = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, areaArr);
+            ArrayAdapter<String> adapterArea = new ArrayAdapter<String>(this, R.layout.spinner_layout, areaArr);
             adapterArea.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterArea.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterArea);
-            spinnerTo.setAdapter(adapterArea);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Circular Measure")) {
             circularMeasureArr = new String[]{"Radius", "Diameter", "Circumference"};
-            ArrayAdapter<String> adapterCircularMeasure = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, circularMeasureArr);
+            ArrayAdapter<String> adapterCircularMeasure = new ArrayAdapter<String>(this, R.layout.spinner_layout, circularMeasureArr);
             adapterCircularMeasure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterCircularMeasure.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterCircularMeasure);
-            spinnerTo.setAdapter(adapterCircularMeasure);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Data Transfer Rate")) {
             dataTransArr = new String[]{"Bit per second", "Kilobit per second", "Kilobyte per second", "Megabit per second", "Megabyte per second",
                     "Gigabit per second", "Gigabyte per second", "Terabit per second", "Terabyte per second"};
-            ArrayAdapter<String> adapterDataTrans = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dataTransArr);
+            ArrayAdapter<String> adapterDataTrans = new ArrayAdapter<String>(this, R.layout.spinner_layout, dataTransArr);
             adapterDataTrans.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterDataTrans.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterDataTrans);
-            spinnerTo.setAdapter(adapterDataTrans);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Density")) {
             densityArr = new String[]{"gram/mm³", "gram/cm³", "gram/m³", "gram/liter", "kg/mm³", "kg/cm³", "kg/m³", "kg/liter",
                     "ounce/in³", "ounce/ft³", "ounce/yd³", "lb/in³", "lb/ft³", "lb/yd³", "cwt(short)/m³", "cwt(long)/m³",
                     "ton(short)/m³", "ton(long)/m³", "tonne/m³", "cwt(short)/ft³", "cwt(long)/ft³", "ton(short)/ft³",
                     "ton(long)/ft³", "tonne/ft³", "cwt(short)/yd³", "cwt(long)/yd³", "ton(short)/yd³", "ton(long)/yd³", "tonne/yd³"};
-            ArrayAdapter<String> adapterDensity = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, densityArr);
+            ArrayAdapter<String> adapterDensity = new ArrayAdapter<String>(this, R.layout.spinner_layout, densityArr);
             adapterDensity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterDensity.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterDensity);
-            spinnerTo.setAdapter(adapterDensity);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Digital Storage")) {
             digitalStorArr = new String[]{"Bit", "Kilobit", "Kibibit", "Megabit", "Mebibit", "Gigabit", "Gibibit", "Terabit", "Tebibit", "Petabit", "Pebibit",
                     "Byte", "Kilobyte", "Kibibyte", "Megabyte", "Mebibyte", "Gigabyte", "Gibibyte", "Terabyte", "Tebibyte", "Petabyte", "Pebibyte"};
-            ArrayAdapter<String> adapterDeiditalStor = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, digitalStorArr);
+            ArrayAdapter<String> adapterDeiditalStor = new ArrayAdapter<String>(this, R.layout.spinner_layout, digitalStorArr);
             adapterDeiditalStor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterDeiditalStor.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterDeiditalStor);
-            spinnerTo.setAdapter(adapterDeiditalStor);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Energy")) {
             energyArr = new String[]{"N-m", "kg-m", "ft-lb", "Btu", "Joule", "Kilojoule", "Kilocalorie"};
-            ArrayAdapter<String> adapterEnergy = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, energyArr);
+            ArrayAdapter<String> adapterEnergy = new ArrayAdapter<String>(this, R.layout.spinner_layout, energyArr);
             adapterEnergy.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterEnergy.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterEnergy);
-            spinnerTo.setAdapter(adapterEnergy);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Flow Rate (Volume)")) {
             flowRateVolArr = new String[]{"liter/sec", "liter/min", "liter/hr", "mm³/sec", "mm³/min", "mm³/hr", "cm³/sec (ml/sec)", "cm³/min (ml/min)",
                     "cm³/hr (ml/hr)", "m³/sec", "m³/min", "m³/hr", "in³/sec", "in³/min", "in³/hr", "ft³/sec", "ft³/min", "ft³/hr", "gpm USA",
                     "gpm UK", "MGD USA", "MGD UK", "Barrels/min (oil)", "Barrels/hr (oil)", "Barrels/day (oil)"};
-            ArrayAdapter<String> adapterFlowVol = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, flowRateVolArr);
+            ArrayAdapter<String> adapterFlowVol = new ArrayAdapter<String>(this, R.layout.spinner_layout, flowRateVolArr);
             adapterFlowVol.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterFlowVol.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterFlowVol);
-            spinnerTo.setAdapter(adapterFlowVol);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Flow Rate (Mass)")) {
             flowRateMassArr = new String[]{"gram/sec", "gram/min", "gram/hr", "kg/sec", "kg/min", "kg/hr", "ounce/sec", "ounce/min",
                     "ounce/hr", "lb/sec", "lb/min", "lb/hr", "cwt USA/sec", "cwt UK/sec", "cwt USA/min", "cwt UK/min", "cwt USA/hr", "cwt UK/hr",
                     "ton (short) USA/hr", "ton (long) UK/hr", "tonne (metric)/hr", "ton (short) USA/day", "ton (long) UK/day", "tonne (metric)/day"};
-            ArrayAdapter<String> adapterFlowMass = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, flowRateMassArr);
+            ArrayAdapter<String> adapterFlowMass = new ArrayAdapter<String>(this, R.layout.spinner_layout, flowRateMassArr);
             adapterFlowMass.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterFlowMass.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterFlowMass);
-            spinnerTo.setAdapter(adapterFlowMass);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Force")) {
             forceArr = new String[]{"Newton", "kg-force", "dyne", "lb-force", "ton-force USA", "ton-force UK", "tonne-force"};
-            ArrayAdapter<String> adapterForce = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, forceArr);
+            ArrayAdapter<String> adapterForce = new ArrayAdapter<String>(this, R.layout.spinner_layout, forceArr);
             adapterForce.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterForce.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterForce);
-            spinnerTo.setAdapter(adapterForce);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Frequency")) {
             frequencyArr = new String[]{"Hz (Hertz)", "kHz", "MHz", "Cycles/sec", "Cycles/min", "Cycles/hr", "Revolutions/sec", "Revolutions/min (RPM)",
                     "Revolutions/hr", "Radians/sec", "Radians/min", "Radians/hr", "Degrees/sec", "Degrees/min", "Degrees/hr"};
-            ArrayAdapter<String> adapterFrequency = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, frequencyArr);
+            ArrayAdapter<String> adapterFrequency = new ArrayAdapter<String>(this, R.layout.spinner_layout, frequencyArr);
             adapterFrequency.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterFrequency.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterFrequency);
-            spinnerTo.setAdapter(adapterFrequency);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Fuel Consumption")) {
             fuelArr = new String[]{"km/liter", "km/gallon USA", "km/gallon UK", "Mile/liter", "Mile/gallon USA", "Mile/gallon UK", "Liter/km", "Gallon USA/km",
                     "Gallon UK/km", "Liter/mile", "Gallon USA/mile", "Gallon UK/mile"};
-            ArrayAdapter<String> adapterFuel = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, fuelArr);
+            ArrayAdapter<String> adapterFuel = new ArrayAdapter<String>(this, R.layout.spinner_layout, fuelArr);
             adapterFuel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterFuel.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterFuel);
-            spinnerTo.setAdapter(adapterFuel);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Length")) {
             lengthArr = new String[]{"Kilometer", "Meter", "Centimeter", "Millimeter", "Mile", "Yard", "Foot", "Inch", "Nautical Mile", "Hand",
-                    "Furlong", "Fathom", "Cable UK", "Cable USA", "Angstrom", "Micron", "Microinch", "Astronomical Unit", "Lightyear"};
-            ArrayAdapter<String> adapterLength = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lengthArr);
+                    "Furlong", "Fathom", "Cable UK", "Cable USA", "Angstrom", "Micron", "Microinch"};
+            ArrayAdapter<String> adapterLength = new ArrayAdapter<String>(this, R.layout.spinner_layout, lengthArr);
             adapterLength.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterLength.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterLength);
-            spinnerTo.setAdapter(adapterLength);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Lighting")) {
             lightingArr = new String[]{"Lumen/cm²", "Lumen/m² (Lux)", "Lumen/in²", "Lumen/ft²", "Foot-candle"};
-            ArrayAdapter<String> adapterLighting = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lightingArr);
+            ArrayAdapter<String> adapterLighting = new ArrayAdapter<String>(this, R.layout.spinner_layout, lightingArr);
             adapterLighting.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterLighting.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterLighting);
-            spinnerTo.setAdapter(adapterLighting);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Liquid Measure")) {
             liquidMeasureArr = new String[]{"Milliliter (cm³)", "Liter", "Gallon USA", "Gallon UK", "Pint USA", "Pint UK", "Quart USA", "Quart UK",
                     "Fluid Ounce USA", "Fluid Ounce UK", "Barrels (Oil)"};
-            ArrayAdapter<String> adapterLiquidMeasure = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, liquidMeasureArr);
+            ArrayAdapter<String> adapterLiquidMeasure = new ArrayAdapter<String>(this, R.layout.spinner_layout, liquidMeasureArr);
             adapterLiquidMeasure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterLiquidMeasure.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterLiquidMeasure);
-            spinnerTo.setAdapter(adapterLiquidMeasure);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Mass")) {
             massArr = new String[]{"Tonne", "Kilogram", "Gram", "Milligram", "Imperial Ton", "US Ton", "Stone", "Pound", "Ounce"};
-            ArrayAdapter<String> adapterMass = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, massArr);
+            ArrayAdapter<String> adapterMass = new ArrayAdapter<String>(this, R.layout.spinner_layout, massArr);
             adapterMass.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterMass.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterMass);
-            spinnerTo.setAdapter(adapterMass);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Power")) {
             powerArr = new String[]{"Watt", "Kilowatt", "Megawatt", "Joule/sec", "Joule/min", "Joule/hr", "kg-m/sec", "kg-m/min", "kg-m/hr", "N-m/sec",
                     "N-m/min", "N-m/hr", "kcal/sec (Steam)", "kcal/min (Steam)", "kcal/hr (Steam)", "Horse Power", "ft-lb/sec", "ft-lb/min", "ft-lb/hr",
                     "Btu/sec (Steam)", "Btu/min (Steam)", "Btu/hr (Steam)", "Ton of Refrigeration"};
-            ArrayAdapter<String> adapterPower = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, powerArr);
+            ArrayAdapter<String> adapterPower = new ArrayAdapter<String>(this, R.layout.spinner_layout, powerArr);
             adapterPower.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterPower.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterPower);
-            spinnerTo.setAdapter(adapterPower);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Pressure")) {
             pressureArr = new String[]{"N/m²", "Pascal", "Kilopascal", "Millibar", "Bar", "kgf/cm²", "Atmosphere", "mm.H2O", "m.H2O", "in.H2O", "ft.H2O",
                     "mm.Hg (Torr)", "in.Hg", "lbf/in² (psi)", "lbf/ft²", "ton-force (short)/in²", "ton-force (short)/ft²", "ton-force (short)/m²",
                     "ton-force (long)/in²", "ton-force (long)/ft²", "ton-force (long)/m²", "tonne-force/in²", "tonne-force/ft²", "tonne-force/m²"};
-            ArrayAdapter<String> adapterPressure = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, pressureArr);
+            ArrayAdapter<String> adapterPressure = new ArrayAdapter<String>(this, R.layout.spinner_layout, pressureArr);
             adapterPressure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterPressure.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterPressure);
-            spinnerTo.setAdapter(adapterPressure);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Torque")) {
             torqueArr = new String[]{"N-m", "kg-m", "ounce-foot", "ounce-inch", "lb-foot", "lb-inch", "kW/rpm", "HP/rpm"};
-            ArrayAdapter<String> adapterTorque = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, torqueArr);
+            ArrayAdapter<String> adapterTorque = new ArrayAdapter<String>(this, R.layout.spinner_layout, torqueArr);
             adapterTorque.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterTorque.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterTorque);
-            spinnerTo.setAdapter(adapterTorque);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Temperature")) {
             temperatureArr = new String[]{"°Celsius", "°Fahrenheit", "°Kelvin", "°Rankine"};
-            ArrayAdapter<String> adapterTemperature = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, temperatureArr);
+            ArrayAdapter<String> adapterTemperature = new ArrayAdapter<String>(this, R.layout.spinner_layout, temperatureArr);
             adapterTemperature.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterTemperature.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterTemperature);
-            spinnerTo.setAdapter(adapterTemperature);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Time")) {
             timeArr = new String[]{"Nanosecond", "Microsecond", "Millisecond", "Second", "Minute", "Hour", "Day", "Week", "Month", "Year", "Decade", "Century"};
-            ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, timeArr);
+            ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this, R.layout.spinner_layout, timeArr);
             adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterTime.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterTime);
-            spinnerTo.setAdapter(adapterTime);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Velocity")) {
             velocityArr = new String[]{"mm/sec", "mm/min", "mm/hr", "cm/sec", "cm/min", "cm/hr", "m/sec", "m/min", "m/hr", "km/sec", "km/min", "km/hr", "inch/sec", "inch/min",
                     "inch/hr", "ft/sec", "ft/min", "ft/hr", "mile/sec", "mile/min", "mile/hr", "Knot", "Mach (Sea Level)"};
-            ArrayAdapter<String> adapterVelocity = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, velocityArr);
+            ArrayAdapter<String> adapterVelocity = new ArrayAdapter<String>(this, R.layout.spinner_layout, velocityArr);
             adapterVelocity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterVelocity.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterVelocity);
-            spinnerTo.setAdapter(adapterVelocity);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Viscosity Dynamic")) {
             viscosityDynArr = new String[]{"Centipoise", "Poise", "Pascal-sec", "N-sec/m²", "Gram-sec/m²", "Gram-sec/ft²", "kg-sec/m²", "kg-sec/ft²", "lbf-sec/m²", "lbf-sec/ft²"};
-            ArrayAdapter<String> adapterViscDyn = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, viscosityDynArr);
+            ArrayAdapter<String> adapterViscDyn = new ArrayAdapter<String>(this, R.layout.spinner_layout, viscosityDynArr);
             adapterViscDyn.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterViscDyn.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterViscDyn);
-            spinnerTo.setAdapter(adapterViscDyn);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Viscosity Kinematic")) {
             viscosityKinArr = new String[]{"lbf-sec/m²", "lbf-sec/ft²", "Centistokes (mm²/sec)", "Stokes (cm²/sec)", "m²/sec"};
-            ArrayAdapter<String> adapterViscKin = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, viscosityKinArr);
+            ArrayAdapter<String> adapterViscKin = new ArrayAdapter<String>(this, R.layout.spinner_layout, viscosityKinArr);
             adapterViscKin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterViscKin.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterViscKin);
-            spinnerTo.setAdapter(adapterViscKin);
+            textViewDone = false;
+            deleteTextViews();
         }
         if (sp1.equals("Volume / Capacity")) {
             volumeArr = new String[]{"US Liquid Gallon", "US Liquid Quart", "US Liquid Pint", "US Legal Cup", "US Fluid Ounce", "US Tablespoon", "US Teaspoon",
                     "m³", "Liter", "Milliliter", "Imperial Gallon", "Imperial Quart", "Imperial Pint", "Imperial Cup", "Imperial Fluid Ounce",
                     "Imperial Tablespoon", "Imperial Teaspoon", "ft³", "in³"};
-            ArrayAdapter<String> adapterVolume = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, volumeArr);
+            ArrayAdapter<String> adapterVolume = new ArrayAdapter<String>(this, R.layout.spinner_layout, volumeArr);
             adapterVolume.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             adapterVolume.notifyDataSetChanged();
             spinnerFrom.setAdapter(adapterVolume);
-            spinnerTo.setAdapter(adapterVolume);
+            textViewDone = false;
+            deleteTextViews();
         }
 
     }
@@ -385,384 +422,586 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
     }
 
-    public void infoPressed(View view) {
-        Intent i = new Intent(MainActivity.this, InfoPage.class);
-        startActivity(i);
-    }
-
     class calculation extends TimerTask {
         public void run() {
 
             if (!input.getText().toString().equals("")) {
 
                 String spFrom = String.valueOf(spinnerFrom.getSelectedItem());
-                String spTo = String.valueOf(spinnerTo.getSelectedItem());
                 java.math.BigDecimal inputFloat = new java.math.BigDecimal(input.getText().toString());
 
             /*------START OF ACCELERATION CONVERIONS------*/
                 if (sp1.equals("Acceleration")) {
-                    indexFrom = Arrays.asList(accelerationArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(accelerationArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(accelerationValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(accelerationValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < accelerationValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(accelerationArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(accelerationValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(accelerationValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), accelerationArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF ACCELERATION CONVERSIONS------*/
 
             /*------START OF ANGLES CONVERIONS------*/
                 if (sp1.equals("Angles")) {
-                    indexFrom = Arrays.asList(anglesArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(anglesArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(anglesValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(anglesValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < anglesValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(anglesArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(anglesValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(anglesValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), anglesArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF ANGLES CONVERSIONS------*/
 
             /*------START OF AREA CONVERIONS------*/
                 if (sp1.equals("Area")) {
-                    indexFrom = Arrays.asList(areaArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(areaArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(areaValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(areaValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < areaValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(areaArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(areaValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(areaValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), areaArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF AREA CONVERSIONS------*/
 
             /*------START OF CIRCULAR MEASURE CONVERIONS------*/
                 if (sp1.equals("Circular Measure")) {
-                    indexFrom = Arrays.asList(circularMeasureArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(circularMeasureArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(circularMeasureValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(circularMeasureValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < circularMeasureValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(circularMeasureArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(circularMeasureValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(circularMeasureValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), circularMeasureArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF CIRCULAR MEASURE CONVERSIONS------*/
 
             /*------START OF DATA TRANSFER RATE CONVERIONS------*/
                 if (sp1.equals("Data Transfer Rate")) {
-                    indexFrom = Arrays.asList(dataTransArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(dataTransArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(dataTransValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(dataTransValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < dataTransValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(dataTransArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(dataTransValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(dataTransValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), dataTransArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF DATA TRANSFER RATE CONVERSIONS------*/
 
             /*------START OF DENSITY CONVERIONS------*/
                 if (sp1.equals("Density")) {
-                    indexFrom = Arrays.asList(densityArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(densityArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(densityValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(densityValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < densityValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(densityArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(densityValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(densityValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), densityArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF DENSITY CONVERSIONS------*/
 
             /*------START OF DIGITAL STORAGE CONVERIONS------*/
                 if (sp1.equals("Digital Storage")) {
-                    indexFrom = Arrays.asList(digitalStorArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(digitalStorArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(digitalStorValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(digitalStorValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < digitalStorValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(digitalStorArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(digitalStorValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(digitalStorValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), digitalStorArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF DIGITAL STORAGE CONVERSIONS------*/
 
             /*------START OF ENERGY CONVERIONS------*/
                 if (sp1.equals("Energy")) {
-                    indexFrom = Arrays.asList(energyArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(energyArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(energyValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(energyValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < energyValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(energyArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(energyValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(energyValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), energyArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF ENERGY CONVERSIONS------*/
 
             /*------START OF FLOW RATE (VOLUME) CONVERIONS------*/
                 if (sp1.equals("Flow Rate (Volume)")) {
-                    indexFrom = Arrays.asList(flowRateVolArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(flowRateVolArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateVolValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(flowRateVolValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < flowRateVolValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(flowRateVolArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateVolValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(flowRateVolValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), flowRateVolArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF FLOW RATE (VOLUME) CONVERSIONS------*/
 
             /*------START OF FLOW RATE (MASS) CONVERIONS------*/
-                if (sp1.equals("Flow Rate (Mass)")) {
-                    indexFrom = Arrays.asList(flowRateMassArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(flowRateMassArr).indexOf(spTo);
-                    answer = inputFloat;
+                if (sp1.equals("Flow Rate (Mass")) {
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateMassValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(flowRateMassValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < flowRateMassValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(flowRateMassArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateMassValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(flowRateMassValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), flowRateMassArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF FLOW RATE (MASS) CONVERSIONS------*/
 
             /*------START OF FORCE CONVERIONS------*/
                 if (sp1.equals("Force")) {
-                    indexFrom = Arrays.asList(forceArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(forceArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(forceValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(forceValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < forceValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(forceArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(forceValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(forceValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), forceArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF FORCE CONVERSIONS------*/
 
             /*------START OF FREQUENCY CONVERIONS------*/
                 if (sp1.equals("Frequency")) {
-                    indexFrom = Arrays.asList(frequencyArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(frequencyArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(frequencyValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(frequencyValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < frequencyValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(frequencyArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(frequencyValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(frequencyValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), frequencyArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF FREQUENCY CONVERSIONS------*/
 
             /*------START OF FUEL CONSUMPTION CONVERIONS------*/
                 if (sp1.equals("Fuel Consumption")) {
-                    indexFrom = Arrays.asList(fuelArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(fuelArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(fuelValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(fuelValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < fuelValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(fuelArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(fuelValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(fuelValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), fuelArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF FUEL CONSUMPTION CONVERSIONS------*/
 
             /*------START OF LENGTH CONVERIONS------*/
                 if (sp1.equals("Length")) {
-                    indexFrom = Arrays.asList(lengthArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(lengthArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lengthValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(lengthValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < lengthValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(lengthArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lengthValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(lengthValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), lengthArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF LENGTH CONVERSIONS------*/
 
             /*------START OF LIGHTING CONVERIONS------*/
                 if (sp1.equals("Lighting")) {
-                    indexFrom = Arrays.asList(lightingArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(lightingArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lightingValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(lightingValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < lightingValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(lightingArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lightingValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(lightingValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), lightingArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF LIGHTING CONVERSIONS------*/
 
             /*------START OF LIQUID MEASURE CONVERIONS------*/
                 if (sp1.equals("Liquid Measure")) {
-                    indexFrom = Arrays.asList(liquidMeasureArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(liquidMeasureArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(liquidMeasureValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(liquidMeasureValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+
+                    for (int indexTo = 0; indexTo < liquidMeasureValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(liquidMeasureArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(liquidMeasureValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(liquidMeasureValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), liquidMeasureArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF LIQUID MEASURE CONVERSIONS------*/
@@ -770,23 +1009,35 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF MASS CONVERIONS------*/
                 if (sp1.equals("Mass")) {
 
-                    indexFrom = Arrays.asList(massArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(massArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(massValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(massValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < massValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(massArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(massValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(massValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), massArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF MASS CONVERSIONS------*/
@@ -794,23 +1045,35 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF POWER CONVERIONS------*/
                 if (sp1.equals("Power")) {
 
-                    indexFrom = Arrays.asList(powerArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(powerArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(powerValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(powerValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < powerValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(powerArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(powerValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(powerValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), powerArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF POWER CONVERSIONS------*/
@@ -818,23 +1081,35 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF PRESSURE CONVERIONS------*/
                 if (sp1.equals("Pressure")) {
 
-                    indexFrom = Arrays.asList(pressureArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(pressureArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(pressureValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(pressureValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < pressureValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(pressureArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(pressureValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(pressureValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), pressureArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF PRESSURE CONVERSIONS------*/
@@ -842,23 +1117,35 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF TORQUE CONVERIONS------*/
                 if (sp1.equals("Torque")) {
 
-                    indexFrom = Arrays.asList(torqueArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(torqueArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(torqueValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(torqueValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < torqueValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(torqueArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(torqueValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(torqueValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), torqueArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF TORQUE CONVERSIONS------*/
@@ -867,6 +1154,7 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                 if (sp1.equals("Temperature")) {
 
                     answer = inputFloat;
+                    java.math.BigDecimal temp = inputFloat;
                     java.math.BigDecimal nine = new java.math.BigDecimal("9");
                     java.math.BigDecimal five = new java.math.BigDecimal("5");
                     java.math.BigDecimal thirtyTwo = new java.math.BigDecimal("32");
@@ -876,40 +1164,129 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
                     switch (spFrom) {
                         case "°Celsius":
-                            if (spTo.equals("°Fahrenheit"))
-                                answer = ((answer.multiply(nine)).divide(five, 5)).add(thirtyTwo);
-                            else if (spTo.equals("°Kelvin"))
-                                answer = answer.add(twoSeventyThree);
-                            else if (spTo.equals("°Rankine"))
-                                answer = ((answer.add(twoSeventyThree)).multiply(nine)).divide(five, 5);
+                            if (!textViewDone) {
+                                createTextview(temp.toPlainString(), "°Celsius");
+
+                                answer = ((temp.multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).divide(five,
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).add(thirtyTwo).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Fahrenheit");
+
+                                answer = temp.add(twoSeventyThree);
+                                createTextview(answer.toPlainString(), "°Kelvin");
+
+                                answer = ((temp.add(twoSeventyThree)).multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).divide(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Rankine");
+
+                                textViewDone = true;
+                            } else if (textViewDone) {
+                                updateTextViews(answer.toPlainString(), 0);
+
+                                answer = ((temp.multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).divide(five,
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).add(thirtyTwo).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 1);
+
+                                answer = temp.add(twoSeventyThree);
+                                updateTextViews(answer.toPlainString(), 2);
+
+                                answer = ((temp.add(twoSeventyThree)).multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).divide(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 3);
+                            }
                             break;
 
-
                         case "°Fahrenheit":
-                            if (spTo.equals("°Celsius"))
-                                answer = ((answer.subtract(thirtyTwo)).multiply(five)).divide(nine, 5);
-                            else if (spTo.equals("°Kelvin"))
-                                answer = ((answer.subtract(thirtyTwo)).multiply(five).divide(nine, 5)).add(twoSeventyThree);
-                            else if (spTo.equals("°Rankine"))
-                                answer = answer.add(fourFiftyNine);
+                            if (!textViewDone) {
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Celsius");
+
+                                createTextview(temp.toPlainString(), "°Fahrenheit");
+
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).add(twoSeventyThree).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Kelvin");
+
+                                answer = temp.add(fourFiftyNine);
+                                createTextview(answer.toPlainString(), "°Rankine");
+
+                                textViewDone = true;
+                            } else if (textViewDone) {
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 0);
+
+                                updateTextViews(temp.toPlainString(), 1);
+
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).add(twoSeventyThree).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 2);
+
+                                answer = temp.add(fourFiftyNine);
+                                updateTextViews(answer.toPlainString(), 3);
+                            }
                             break;
 
                         case "°Kelvin":
-                            if (spTo.equals("°Celsius"))
-                                answer = answer.subtract(twoSeventyThree);
-                            else if (spTo.equals("°Fahrenheit"))
-                                answer = (answer.multiply(onePointEight)).subtract(fourFiftyNine);
-                            else if (spTo.equals("°Rankine"))
-                                answer = answer.multiply(onePointEight);
+                            if (!textViewDone) {
+                                answer = temp.subtract(twoSeventyThree);
+                                createTextview(answer.toPlainString(), "°Celsius");
+
+                                answer = (temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).subtract(fourFiftyNine).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Fahrenheit");
+
+                                createTextview(temp.toPlainString(), "°Kelvin");
+
+                                answer = temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Rankine");
+
+                                textViewDone = true;
+                            } else if (textViewDone) {
+                                answer = temp.subtract(twoSeventyThree);
+                                updateTextViews(answer.toPlainString(), 0);
+
+                                answer = (temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                        RoundingMode.HALF_DOWN)).subtract(fourFiftyNine).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 1);
+
+                                updateTextViews(temp.toPlainString(), 2);
+
+                                answer = temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 3);
+                            }
                             break;
 
                         case "°Rankine":
-                            if (spTo.equals("°Celsius"))
-                                answer = (answer.subtract(thirtyTwo).subtract(fourFiftyNine)).divide(onePointEight, 5);
-                            else if (spTo.equals("°Fahrenheit"))
-                                answer = answer.subtract(fourFiftyNine);
-                            else if (spTo.equals("°Kelvin"))
-                                answer = answer.divide(onePointEight, 5);
+                            if (!textViewDone) {
+                                answer = (temp.subtract(thirtyTwo).subtract(fourFiftyNine)).divide(onePointEight,
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Celsius");
+
+                                answer = temp.subtract(fourFiftyNine);
+                                createTextview(answer.toPlainString(), "°Fahrenheit");
+
+                                answer = temp.divide(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                createTextview(answer.toPlainString(), "°Kelvin");
+
+                                createTextview(temp.toPlainString(), "°Rankine");
+
+                                textViewDone = true;
+                            } else if (textViewDone) {
+                                answer = (temp.subtract(thirtyTwo).subtract(fourFiftyNine)).divide(onePointEight,
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 0);
+
+                                answer = temp.subtract(fourFiftyNine);
+                                updateTextViews(answer.toPlainString(), 1);
+
+                                answer = temp.divide(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                updateTextViews(answer.toPlainString(), 2);
+
+                                updateTextViews(temp.toPlainString(), 3);
+                            }
                             break;
 
                         default:
@@ -922,23 +1299,35 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF TIME CONVERIONS------*/
                 if (sp1.equals("Time")) {
 
-                    indexFrom = Arrays.asList(timeArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(timeArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(timeValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(timeValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < timeValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(timeArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(timeValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(timeValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), timeArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF TIME CONVERSIONS------*/
@@ -946,23 +1335,35 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF VELOCITY CONVERIONS------*/
                 if (sp1.equals("Velocity")) {
 
-                    indexFrom = Arrays.asList(velocityArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(velocityArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(velocityValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(velocityValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < velocityValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(velocityArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(velocityValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(velocityValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), velocityArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF VELOCITY CONVERSIONS------*/
@@ -970,23 +1371,35 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF VISCOSITY DYNAMIC CONVERIONS------*/
                 if (sp1.equals("Viscosity Dynamic")) {
 
-                    indexFrom = Arrays.asList(viscosityDynArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(viscosityDynArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityDynValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(viscosityDynValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < viscosityDynValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(viscosityDynArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityDynValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(viscosityDynValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), viscosityDynArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF VISCOSITY DYNAMIC CONVERSIONS------*/
@@ -994,64 +1407,147 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
             /*------START OF VISCOSITY KINEMATIC CONVERIONS------*/
                 if (sp1.equals("Viscosity Kinematic")) {
 
-                    indexFrom = Arrays.asList(viscosityKinArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(viscosityKinArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityKinValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(viscosityKinValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < viscosityKinValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(viscosityKinArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityKinValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(viscosityKinValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), viscosityKinArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF VISCOSITY KINEMATIC CONVERSIONS------*/
 
             /*------START OF VOLUME CONVERIONS------*/
-                if (sp1.equals("Volume / Capacity")) {
+                if (sp1.equals("Volume")) {
 
-                    indexFrom = Arrays.asList(volumeArr).indexOf(spFrom);
-                    indexTo = Arrays.asList(volumeArr).indexOf(spTo);
-                    answer = inputFloat;
 
-                    if (indexFrom < indexTo) {
-                        indexFrom += 1;
-                        for (int x = indexFrom; x <= indexTo; x++) {
-                            java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(volumeValArr[x]));
-                            answer = answer.divide(divNum, 5);
-                        }
-                    } else if (indexFrom > indexTo) {
-                        indexTo += 1;
-                        for (int x = indexTo; x <= indexFrom; x++) {
-                            java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(volumeValArr[x]));
-                            answer = answer.multiply(mulNum);
-                        }
+                    for (int indexTo = 0; indexTo < volumeValArr.length; indexTo++) {
+                        indexFrom = Arrays.asList(volumeArr).indexOf(spFrom);
+                        answer = inputFloat;
+                        if (indexFrom < indexTo) {
+                            indexFrom += 1;
+                            for (int x = indexFrom; x <= indexTo; x++) {
+                                java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(volumeValArr[x]));
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                        } else if (indexFrom > indexTo) {
+                            int temp = indexTo;
+                            indexTo += 1;
+                            for (int x = indexTo; x <= indexFrom; x++) {
+                                java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(volumeValArr[x]));
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                            }
+                            indexTo = temp;
+
+                        } else if (indexFrom == indexTo)
+                            answer = inputFloat;
+
+                        if (!textViewDone)
+                            createTextview(answer.toPlainString(), volumeArr[indexTo]);
+                        else
+                            updateTextViews(answer.toPlainString(), indexTo);
+
                     }
+                    textViewDone = true;
                 }
 
             /*------END OF VOLUME CONVERSIONS------*/
 
-
             }
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (!input.getText().toString().equals(""))
-                        result.setText(answer.toPlainString());
-                    else
-                        result.setText("0");
-                }
-            });
 
         }
 
+    }
+
+
+    public void createTextview(String value, String name) {
+
+        final String answerText = value;
+        final String unitName = name;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayout llHor = new LinearLayout(getBaseContext());
+                llHor.setOrientation(LinearLayout.HORIZONTAL);
+                llHor.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+                llHor.setPadding(0, 0, 0, 0);
+
+                TextView tv = new TextView(getBaseContext());
+                tv.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+                tv.setText(answerText);
+                tv.setBackgroundResource(R.drawable.data_text_view_left);
+                tv.setGravity(Gravity.END);
+                tv.setPadding(40, 40, 80, 40);
+                tv.setTextColor(Color.parseColor("#3F51B5"));
+                tv.setTextSize(20);
+                llHor.addView(tv);
+                answerTextViewList.add(tv);
+
+                TextView tv1 = new TextView(getBaseContext());
+                tv1.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1.0f));
+                tv1.setText(unitName);
+                tv1.setTextSize(20);
+                tv1.setBackgroundResource(R.drawable.data_text_view_right);
+                tv1.setTextColor(Color.parseColor("#000000"));
+                tv1.setGravity(Gravity.START);
+                tv1.setPadding(80, 40, 40, 40);
+                llHor.addView(tv1);
+
+                ll.addView(llHor);
+            }
+        });
+    }
+
+    public void updateTextViews(String answer, int index) {
+        final String x = answer;
+        final int y = index;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                TextView textView = answerTextViewList.get(y);
+                textView.setText(x);
+            }
+        });
+
+    }
+
+    public void deleteTextViews() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ll.removeAllViewsInLayout();
+                answerTextViewList.clear();
+            }
+        });
+
+    }
+
+    public void infoPressed(View view) {
+        Intent i = new Intent(MainActivity.this, InfoPage.class);
+        startActivity(i);
     }
 }
