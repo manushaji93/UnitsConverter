@@ -441,14 +441,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(accelerationValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(accelerationValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -477,14 +477,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(anglesValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(anglesValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -513,14 +513,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(areaValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(areaValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -549,14 +549,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(circularMeasureValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(circularMeasureValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -585,14 +585,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(dataTransValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(dataTransValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -621,14 +621,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(densityValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(densityValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -657,14 +657,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(digitalStorValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(digitalStorValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -693,14 +693,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(energyValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(energyValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -729,14 +729,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateVolValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(flowRateVolValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -765,14 +765,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(flowRateMassValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(flowRateMassValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -801,14 +801,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(forceValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(forceValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -837,14 +837,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(frequencyValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(frequencyValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -873,14 +873,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(fuelValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(fuelValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -909,14 +909,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lengthValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(lengthValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -945,14 +945,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(lightingValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(lightingValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -981,14 +981,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(liquidMeasureValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(liquidMeasureValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1017,14 +1017,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(massValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(massValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1053,14 +1053,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(powerValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(powerValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1089,14 +1089,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(pressureValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(pressureValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1125,14 +1125,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(torqueValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(torqueValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1167,44 +1167,44 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             if (!textViewDone) {
                                 createTextview(temp.toPlainString(), "°Celsius");
 
-                                answer = ((temp.multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).divide(five,
-                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).add(thirtyTwo).stripTrailingZeros();
+                                answer = ((temp.multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN)).divide(five,
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN)).add(thirtyTwo).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Fahrenheit");
 
                                 answer = temp.add(twoSeventyThree);
                                 createTextview(answer.toPlainString(), "°Kelvin");
 
-                                answer = ((temp.add(twoSeventyThree)).multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
-                                        RoundingMode.HALF_DOWN)).divide(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = ((temp.add(twoSeventyThree)).multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
+                                        RoundingMode.HALF_DOWN)).divide(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Rankine");
 
                                 textViewDone = true;
                             } else if (textViewDone) {
                                 updateTextViews(answer.toPlainString(), 0);
 
-                                answer = ((temp.multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).divide(five,
-                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN)).add(thirtyTwo).stripTrailingZeros();
+                                answer = ((temp.multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN)).divide(five,
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN)).add(thirtyTwo).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 1);
 
                                 answer = temp.add(twoSeventyThree);
                                 updateTextViews(answer.toPlainString(), 2);
 
-                                answer = ((temp.add(twoSeventyThree)).multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
-                                        RoundingMode.HALF_DOWN)).divide(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = ((temp.add(twoSeventyThree)).multiply(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
+                                        RoundingMode.HALF_DOWN)).divide(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 3);
                             }
                             break;
 
                         case "°Fahrenheit":
                             if (!textViewDone) {
-                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
-                                        RoundingMode.HALF_DOWN)).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
+                                        RoundingMode.HALF_DOWN)).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Celsius");
 
                                 createTextview(temp.toPlainString(), "°Fahrenheit");
 
-                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
-                                        RoundingMode.HALF_DOWN).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
+                                        RoundingMode.HALF_DOWN).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
                                         RoundingMode.HALF_DOWN)).add(twoSeventyThree).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Kelvin");
 
@@ -1213,14 +1213,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
 
                                 textViewDone = true;
                             } else if (textViewDone) {
-                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
-                                        RoundingMode.HALF_DOWN)).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
+                                        RoundingMode.HALF_DOWN)).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 0);
 
                                 updateTextViews(temp.toPlainString(), 1);
 
-                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
-                                        RoundingMode.HALF_DOWN).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                answer = ((temp.subtract(thirtyTwo)).multiply(five, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
+                                        RoundingMode.HALF_DOWN).divide(nine, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
                                         RoundingMode.HALF_DOWN)).add(twoSeventyThree).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 2);
 
@@ -1234,13 +1234,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                                 answer = temp.subtract(twoSeventyThree);
                                 createTextview(answer.toPlainString(), "°Celsius");
 
-                                answer = (temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                answer = (temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
                                         RoundingMode.HALF_DOWN)).subtract(fourFiftyNine).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Fahrenheit");
 
                                 createTextview(temp.toPlainString(), "°Kelvin");
 
-                                answer = temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Rankine");
 
                                 textViewDone = true;
@@ -1248,13 +1248,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                                 answer = temp.subtract(twoSeventyThree);
                                 updateTextViews(answer.toPlainString(), 0);
 
-                                answer = (temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6,
+                                answer = (temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(10,
                                         RoundingMode.HALF_DOWN)).subtract(fourFiftyNine).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 1);
 
                                 updateTextViews(temp.toPlainString(), 2);
 
-                                answer = temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = temp.multiply(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 3);
                             }
                             break;
@@ -1262,13 +1262,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                         case "°Rankine":
                             if (!textViewDone) {
                                 answer = (temp.subtract(thirtyTwo).subtract(fourFiftyNine)).divide(onePointEight,
-                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Celsius");
 
                                 answer = temp.subtract(fourFiftyNine);
                                 createTextview(answer.toPlainString(), "°Fahrenheit");
 
-                                answer = temp.divide(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = temp.divide(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 createTextview(answer.toPlainString(), "°Kelvin");
 
                                 createTextview(temp.toPlainString(), "°Rankine");
@@ -1276,13 +1276,13 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                                 textViewDone = true;
                             } else if (textViewDone) {
                                 answer = (temp.subtract(thirtyTwo).subtract(fourFiftyNine)).divide(onePointEight,
-                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                        new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 0);
 
                                 answer = temp.subtract(fourFiftyNine);
                                 updateTextViews(answer.toPlainString(), 1);
 
-                                answer = temp.divide(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = temp.divide(onePointEight, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                                 updateTextViews(answer.toPlainString(), 2);
 
                                 updateTextViews(temp.toPlainString(), 3);
@@ -1307,14 +1307,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(timeValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(timeValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1343,14 +1343,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(velocityValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(velocityValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1379,14 +1379,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityDynValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(viscosityDynValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1415,14 +1415,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(viscosityKinValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(viscosityKinValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
@@ -1451,14 +1451,14 @@ public class MainActivity extends Activity implements OnItemSelectedListener {
                             indexFrom += 1;
                             for (int x = indexFrom; x <= indexTo; x++) {
                                 java.math.BigDecimal divNum = new java.math.BigDecimal(String.valueOf(volumeValArr[x]));
-                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.divide(divNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                         } else if (indexFrom > indexTo) {
                             int temp = indexTo;
                             indexTo += 1;
                             for (int x = indexTo; x <= indexFrom; x++) {
                                 java.math.BigDecimal mulNum = new java.math.BigDecimal(String.valueOf(volumeValArr[x]));
-                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(6, RoundingMode.HALF_DOWN).stripTrailingZeros();
+                                answer = answer.multiply(mulNum, new MathContext(15, RoundingMode.HALF_UP)).setScale(10, RoundingMode.HALF_DOWN).stripTrailingZeros();
                             }
                             indexTo = temp;
 
